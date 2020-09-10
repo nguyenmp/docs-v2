@@ -11,7 +11,7 @@ weight: 9
 This post describes the process to upgrade from an existing InfluxDB 2.0 instance (beta 16 or earlier) to InfluxDB beta 17.
 
 Depending on how you have things set up and how important the data stored in InfluxDB is,
-you can pick and choose parts of this guide that make sense to you.
+you can choose the parts of this guide that make sense to you.
 
 ### Why is this manual process required?
 
@@ -22,7 +22,7 @@ we had to make breaking changes to the underlying storage engine for InfluxDB 2.
 This means that in order to upgrade, you will need to upgrade all resources and time series data to the latest version manually.
 
 {{% note %}}
-If you have any questions or run into any bugs while you are going through this guide,
+If you have any questions or run into any bugs while upgrading
 please [open an issue](https://github.com/influxdata/influxdb/issues)
 or join the [Community Slack workspace](https://influxcommunity.slack.com/) to get immediate help.
 {{% /note %}}
@@ -41,9 +41,9 @@ or join the [Community Slack workspace](https://influxcommunity.slack.com/) to g
 
 ## 1. Disable any existing integrations
 
-To begin, if you have any software interacting with your local InfluxDB beta instance, you will need to pause those integrations until the upgrade is complete.
+To begin, if you have any software interacting with your InfluxDB beta instance, pause those integrations until the upgrade is complete.
 This includes Telegraf, client libraries, and any custom applications you may have developed.
-Basically, anything reading, writing, or monitoring your InfluxDB instance will need to be shut off and re-enabled after the upgrade.
+Basically, anything reading, writing, or monitoring your InfluxDB instance should be shut off and re-enabled after the upgrade.
 
 ## 2. Stop existing InfluxDB beta instance
 
@@ -53,13 +53,13 @@ If you’ve set `influxd` to run as a system process, follow the same steps you 
 
 ## 3. (Optional) Rename existing InfluxDB binaries
 
-To make this a little easier to work with, you can rename your existing `influxd` and `influx` binaries so that you make sure you know which version you are using.
+To make this a little easier to work with, rename your existing `influxd` and `influx` binaries so that you make sure you know which version you are using.
 This is helpful if you’ve installed the binaries in your path.
 We use the names `influxd_old` for this guide, but you can use whatever you like.
 
 ## 4. Move existing data and start the latest InfluxDB
 
-If you haven't already, [download the InfluxDB beta 17 binaries](https://portal.influxdata.com/downloads/).
+If you have not already, [download the InfluxDB beta 17 binaries](https://portal.influxdata.com/downloads/).
 
 In order to move data between the two instances, we are going to configure both the old and new instances of InfluxDB to run at the same time.
 If you download the latest InfluxDB beta, and try to start it up with existing data, it will most likely refuse to start.
@@ -76,19 +76,21 @@ So let’s listen to the message and move our previous data to a safe location:
 mv ~/.influxdbv2 ~/.influxdbv2_old
 ```
 
-You can move it to wherever you’d like.
+(You can move it to wherever you’d like.)
 When we spin up the old instance again, we will tell it where your data files are located.
 
 You can now spin up the latest InfluxDB version.
 Since the data folder has been moved, everything will be empty.
-You can check out localhost:8086 in your browser and see a setup page, but don’t set it up yet.
+<!-- You can check out http://localhost:8086 in your browser and see a setup page, but don’t set it up yet. -->
+You can check out http://localhost:8086 in your browser and see a setup page, but don’t go through the setup process yet.
 
 ```sh
 influxd
 ```
 
 ## 5. Start old InfluxDB beta instance
-You can now spin up your old influxdb instance and point it to your old data directory:
+
+You can now start your old influxdb instance and point it to your old data directory:
 
 ```sh
 influxd_old --bolt-path ~/.influxdbv2_old/influxd.bolt --engine-path ~/.influxdbv2_old/engine
@@ -96,25 +98,25 @@ influxd_old --bolt-path ~/.influxdbv2_old/influxd.bolt --engine-path ~/.influxdb
 
 If you used a different location, just update as appropriate.
 
-You can double check that it’s working by going to your previous InfluxDB beta location (probably http://localhost:9999) and logging in.
-Everything should still be there, so you are safe.
+Double check that it’s working by going to your previous InfluxDB beta location (probably http://localhost:9999) and logging in.
+Everything should still be there.
 
 {{% note %}}
 If you run into a problem about a missing migration, you can manually edit your bolt file to remove it.
 You can use BoltBrowser to open and edit your old influxd.bolt file and manually remove the offending migration.
-{{% /note %}}
 
 {{% warn %}}
 Make a backup of your old influxd.bolt file before doing this, as manually editing your bolt file could cause you to lose all your data.
 {{% /warn %}}
 
 Just highlight the record under the `migrationsv1` path and press **D**.
+{{% /note %}}
 
 At this point, you should have the new instance and old instance of InfluxDB running on the same machine.
 
 ## 6. Configure configuration profiles for the InfluxDB CLI
 
-Next, you’ll need to set up your InfluxDB CLI to connect to your old and new instances.
+Next, set up your InfluxDB CLI to connect to your old and new instances.
 If you’ve used the CLI before, you can copy your existing config file to your new data directory:
 
 ```sh
@@ -144,15 +146,15 @@ If you run `influx config ls` after this, you should see a profile for your old 
 
 ```sh
 $ influx config ls
-Active	Name		URL					Org
-*	influx_old	http://localhost:8086			InfluxData
+Active  Name        URL                    Org
+*       influx_old  http://localhost:8086  InfluxData
 ```
 
 Next, let’s set up your new instance which will automatically create a configuration profile for you.
 You can use the same username and password as your old instance, or something completely new, it’s up to you.
 
 {{% warn %}}
-Caution: For a bucket name, make sure you don’t use the same name as a bucket in your existing instance, otherwise, there will be a collision when you try to copy your resources over.
+For a bucket name, make sure you don’t use the same name as a bucket in your existing instance, otherwise, there will be a collision when you try to copy your resources over.
 We will delete this dummy bucket after everything is moved over.
 {{% /warn %}}
 
@@ -185,7 +187,7 @@ User	Organization	Bucket
 admin	InfluxData	dummy_bucket
 ```
 
-So now you have two config profiles, one named `default` which points to your new instance, and one named `influx_old` that points to your old instance.
+You now have two config profiles: one named `default` which points to your new instance, and one named `influx_old` that points to your old instance.
 
 ```sh
 $ influx config ls
@@ -204,7 +206,8 @@ Now we can copy all your existing influxdb resources, such as dashboards, tasks,
 influx export all -c influx_old | influx apply -c default
 ```
 
-Check out our documentation for the [`influx export`](/influxdb/v2.0/reference/cli/influx/export/) and [`influx apply`](/influxdb/v2.0/reference/cli/influx/apply/) command if you’d like more details about what this is doing.
+Check out our documentation for the [`influx export`](/influxdb/v2.0/reference/cli/influx/export/)
+and [`influx apply`](/influxdb/v2.0/reference/cli/influx/apply/) commands if you’d like more details about what this is doing.
 
 You should see a list of the resources being created in your new instance.
 Assuming everything went ok, you can feel free to delete the bucket created during the setup.
@@ -237,19 +240,22 @@ BUCKETS    +add | -remove | unchanged
 ```
 
 Now you have all the resources from your old instance stored in your new instance.
-Don’t believe me? Log into your new instance (probably http://localhost:8086) and take a look.
+Log into your new instance (probably http://localhost:8086) and take a look.
 
 ## 8. Setup the integrations to point to new instance
 
 Now is a good time to set up any integrations you needed to disable before this process all started.
 You have a better understanding of what those might be, but anything related to Telegraf, client libraries, custom applications, or 3rd party sinks will need to be setup again using new tokens and credentials.
 
-So far, we haven’t moved any time series data over.
+{{% note %}}
+*So far, we haven’t moved any time series data over.*
 If you need to load your existing historical data into your instance, keep reading.
+{{% /note %}}
 
 ## 9. Load your historical data into new instance
+
 There’s no direct migration of raw storage files, but it’s straightforward to use the command line to export and then re-import your data.
-You can dump the raw flux result using the `influx query` command.
+You can dump the raw Flux result using the `influx query` command.
 For the time range, you can just pick something before your bucket’s retention period, or something a really long time ago if you have an unlimited retention period.
 
 ```sh
