@@ -259,7 +259,8 @@ You can dump the raw Flux result using the `influx query` command.
 For the time range, you can just pick something before your bucket’s retention period, or something a really long time ago if you have an unlimited retention period.
 
 ```sh
-influx query -c influx_old ‘from(bucket: “my-bucket”) |> range(start: -3y)’ >  my-bucket.csv
+influx query -c influx_old \
+  'from(bucket: “my-bucket”) |> range(start: -3y)' >  my-bucket.csv
 ```
 
 ```sh
