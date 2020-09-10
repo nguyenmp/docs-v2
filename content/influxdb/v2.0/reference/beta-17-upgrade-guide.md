@@ -1,14 +1,14 @@
 ---
-title: Upgrade to InfluxDB beta 17
+title: Upgrade to InfluxDB OSS 2.0rc1
 description: >
-  Upgrade to InfluxDB beta 17.
+  Upgrade to InfluxDB OSS 2.0rc1.
 menu:
   influxdb_2_0_ref:
-    name: Upgrade to InfluxDB beta 17
+    name: Upgrade to InfluxDB OSS 2.0rc1
 weight: 9
 ---
 
-This post describes the process to upgrade from an existing InfluxDB 2.0 instance (beta 16 or earlier) to InfluxDB beta 17.
+This post describes the process to upgrade from an existing InfluxDB 2.0 instance (beta 16 or earlier) to InfluxDB OSS 2.0rc1.
 
 Depending on how you have things set up and how important the data stored in InfluxDB is,
 you can choose the parts of this guide that make sense to you.
@@ -59,7 +59,7 @@ We use the names `influxd_old` for this guide, but you can use whatever you like
 
 ## 4. Move existing data and start the latest InfluxDB
 
-If you have not already, [download the InfluxDB beta 17 binaries](https://portal.influxdata.com/downloads/).
+If you have not already, [download the InfluxDB OSS 2.0rc1](https://portal.influxdata.com/downloads/).
 
 In order to move data between the two instances, we are going to configure both the old and new instances of InfluxDB to run at the same time.
 If you download the latest InfluxDB beta, and try to start it up with existing data, it will most likely refuse to start.
