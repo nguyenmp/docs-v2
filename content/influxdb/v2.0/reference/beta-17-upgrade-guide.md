@@ -158,7 +158,7 @@ For a bucket name, make sure you don’t use the same name as a bucket in your e
 We will delete this dummy bucket after everything is moved over.
 {{% /warn %}}
 
-```sh
+```
 $ influx setup
 Welcome to InfluxDB 2.0!
 Please type your primary username: admin
