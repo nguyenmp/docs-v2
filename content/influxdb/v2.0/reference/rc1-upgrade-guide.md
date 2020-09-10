@@ -8,7 +8,7 @@ menu:
 weight: 9
 ---
 
-This post describes the process to upgrade from an existing InfluxDB 2.0 instance (beta 16 or earlier) to InfluxDB OSS 2.0rc1.
+This post describes the process to upgrade from an existing InfluxDB 2.0 instance (beta 16 or earlier) to InfluxDB OSS 2.0rc1 (release candidate 1).
 
 Depending on how you have things set up and how important the data stored in InfluxDB is,
 you can choose the parts of this guide that make sense to you.
