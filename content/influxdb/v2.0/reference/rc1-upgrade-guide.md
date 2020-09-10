@@ -15,15 +15,15 @@ you can choose the parts of this guide that make sense to you.
 
 ### Why is this manual process required?
 
+<!-- To ensure that existing InfluxQL integrations work... -->
 In order to support a smoother upgrade process,
 <!-- from 1.x? -->
 and enable existing InfluxQL integrations to work with the latest release,
 we had to make breaking changes to the underlying storage engine for InfluxDB 2.0.
-This means that in order to upgrade, you will need to upgrade all resources and time series data to the latest version manually.
 
 {{% note %}}
-If you have any questions or run into any bugs while upgrading
-please [open an issue](https://github.com/influxdata/influxdb/issues)
+If you have questions upgrading please
+[open an issue](https://github.com/influxdata/influxdb/issues)
 or join the [Community Slack workspace](https://influxcommunity.slack.com/) to get immediate help.
 {{% /note %}}
 
@@ -61,7 +61,7 @@ We use the names `influxd_old` for this guide, but you can use whatever you like
 
 If you have not already, [download the InfluxDB OSS 2.0rc1](https://portal.influxdata.com/downloads/).
 
-In order to move data between the two instances, we are going to configure both the old and new instances of InfluxDB to run at the same time.
+To move data between the two instances, first configure both the old and new instances of InfluxDB to run at the same time.
 If you download the latest InfluxDB beta, and try to start it up with existing data, it will most likely refuse to start.
 You will see an error message in the terminal this old data isn’t compatible.
 
@@ -77,9 +77,10 @@ mv ~/.influxdbv2 ~/.influxdbv2_old
 ```
 
 (You can move it to wherever you’d like.)
-When we spin up the old instance again, we will tell it where your data files are located.
+When we start the old instance again, we will tell it where your data files are located.
+<!-- we'll provide this location -->
 
-You can now spin up the latest InfluxDB version.
+You can now start the latest InfluxDB version.
 Since the data folder has been moved, everything will be empty.
 <!-- You can check out http://localhost:8086 in your browser and see a setup page, but don’t set it up yet. -->
 You can check out http://localhost:8086 in your browser and see a setup page, but don’t go through the setup process yet.
@@ -96,9 +97,9 @@ You can now start your old influxdb instance and point it to your old data direc
 influxd_old --bolt-path ~/.influxdbv2_old/influxd.bolt --engine-path ~/.influxdbv2_old/engine
 ```
 
-If you used a different location, just update as appropriate.
+If you used a different location, update as appropriate.
 
-Double check that it’s working by going to your previous InfluxDB beta location (probably http://localhost:9999) and logging in.
+Double check that InfluxDB is working by going to your previous InfluxDB beta location (probably http://localhost:9999) and logging in.
 Everything should still be there.
 
 {{% note %}}
@@ -109,7 +110,7 @@ You can use BoltBrowser to open and edit your old influxd.bolt file and manually
 Make a backup of your old influxd.bolt file before doing this, as manually editing your bolt file could cause you to lose all your data.
 {{% /warn %}}
 
-Just highlight the record under the `migrationsv1` path and press **D**.
+Highlight the record under the `migrationsv1` path and press **D**.
 {{% /note %}}
 
 At this point, you should have the new instance and old instance of InfluxDB running on the same machine.
@@ -256,7 +257,7 @@ If you need to load your existing historical data into your instance, keep readi
 
 There’s no direct migration of raw storage files, but it’s straightforward to use the command line to export and then re-import your data.
 You can dump the raw Flux result using the `influx query` command.
-For the time range, you can just pick something before your bucket’s retention period, or something a really long time ago if you have an unlimited retention period.
+For the time range, pick a time before your bucket’s retention period, or something a really long time ago if you have an unlimited retention period.
 
 ```sh
 influx query -c influx_old \
