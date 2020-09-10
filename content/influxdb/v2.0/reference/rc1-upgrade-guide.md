@@ -260,7 +260,7 @@ For the time range, you can just pick something before your bucket’s retention
 
 ```sh
 influx query -c influx_old \
-  'from(bucket: “my-bucket”) |> range(start: -3y)' >  my-bucket.csv
+  'from(bucket: "my-bucket") |> range(start: -3y)' >  my-bucket.csv
 ```
 
 ```sh
