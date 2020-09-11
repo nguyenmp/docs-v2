@@ -45,12 +45,13 @@ Basically, anything reading, writing, or monitoring your InfluxDB instance shoul
 Next, shut down your existing InfluxDB beta instance.
 You can manually kill the individual process using **Control+c**
 (or by finding the process ID with `ps aux | grep -i influxd` and using `sudo kill -9 <PID>`).
-If you’ve set `influxd` to run as a system process, follow the same steps you would use to disable any system process.
+If you've set `influxd` to run as a system process, follow the same steps you would use to disable any system process.
 
 ## 3. (Optional) Rename existing InfluxDB binaries
 
-To make this a little easier to work with, rename your existing `influxd` and `influx` binaries so that you make sure you know which version you are using.
-This is helpful if you’ve installed the binaries in your path.
+
+To easily identify your existing InfluxDB binaries, rename them `influx_old` and `influxd_old`.
+This is helpful if you've installed the binaries in your path.
 We use the names `influxd_old` for this guide, but you can use whatever you like.
 
 ## 4. Move existing data and start the latest InfluxDB
@@ -59,27 +60,27 @@ If you have not already, [download the InfluxDB OSS 2.0rc0](https://portal.influ
 
 To move data between the two instances, first configure both the old and new instances of InfluxDB to run at the same time.
 If you download the latest InfluxDB beta, and try to start it up with existing data, it will most likely refuse to start.
-You will see an error message in the terminal this old data isn’t compatible.
+You will see an error message in the terminal this old data isn't compatible.
 
 ```
 Incompatible InfluxDB 2.0 version found.
 Move all files outside of engine_path before influxd will start.
 ```
 
-So let’s listen to the message and move our previous data to a safe location:
+So let's listen to the message and move our previous data to a safe location:
 
 ```sh
 mv ~/.influxdbv2 ~/.influxdbv2_old
 ```
 
-(You can move it to wherever you’d like.)
+(You can move it to wherever you'd like.)
 When we start the old instance again, we will tell it where your data files are located.
 <!-- we'll provide this location -->
 
 You can now start the latest InfluxDB version.
 Since the data folder has been moved, everything will be empty.
-<!-- You can check out http://localhost:8086 in your browser and see a setup page, but don’t set it up yet. -->
-You can check out http://localhost:8086 in your browser and see a setup page, but don’t go through the setup process yet.
+<!-- You can check out http://localhost:8086 in your browser and see a setup page, but don't set it up yet. -->
+You can check out http://localhost:8086 in your browser and see a setup page, but don't go through the setup process yet.
 
 ```sh
 influxd
@@ -114,13 +115,13 @@ At this point, you should have the new instance and old instance of InfluxDB run
 ## 6. Configure configuration profiles for the InfluxDB CLI
 
 Next, set up your InfluxDB CLI to connect to your old and new instances.
-If you’ve used the CLI before, you can copy your existing config file to your new data directory:
+If you've used the CLI before, you can copy your existing config file to your new data directory:
 
 ```sh
 cp ~/.influxdbv2_old/configs ~/.influxdbv2/configs
 ```
 
-You might want to edit that file and rename your old config to be something to indicate that it’s the old version, like `influx_old`.
+You might want to edit that file and rename your old config to be something to indicate that it's the old version, like `influx_old`.
 
 {{< keep-url >}}
 ```toml
@@ -131,7 +132,7 @@ You might want to edit that file and rename your old config to be something to i
   active = true
 ```
 
-If you’ve never used the CLI before, you can create a new configuration profile using the `influx config` command.
+If you've never used the CLI before, you can create a new configuration profile using the `influx config` command.
 
 ```sh
 influx config create \
@@ -148,11 +149,11 @@ Active  Name        URL                    Org
 *       influx_old  http://localhost:8086  InfluxData
 ```
 
-Next, let’s set up your new instance which will automatically create a configuration profile for you.
-You can use the same username and password as your old instance, or something completely new, it’s up to you.
+Next, let's set up your new instance which will automatically create a configuration profile for you.
+You can use the same username and password as your old instance, or something completely new, it's up to you.
 
 {{% warn %}}
-For a bucket name, make sure you don’t use the same name as a bucket in your existing instance, otherwise, there will be a collision when you try to copy your resources over.
+For a bucket name, make sure you don't use the same name as a bucket in your existing instance, otherwise, there will be a collision when you try to copy your resources over.
 We will delete this dummy bucket after everything is moved over.
 {{% /warn %}}
 
@@ -204,7 +205,7 @@ influx export all -c influx_old | influx apply -c default
 ```
 
 Check out our documentation for the [`influx export`](/influxdb/v2.0/reference/cli/influx/export/)
-and [`influx apply`](/influxdb/v2.0/reference/cli/influx/apply/) commands if you’d like more details about what this is doing.
+and [`influx apply`](/influxdb/v2.0/reference/cli/influx/apply/) commands if you'd like more details about what this is doing.
 
 You should see a list of the resources being created in your new instance.
 Assuming everything went ok, you can feel free to delete the bucket created during the setup.
@@ -245,15 +246,15 @@ Now is a good time to set up any integrations you needed to disable before this 
 You have a better understanding of what those might be, but anything related to Telegraf, client libraries, custom applications, or 3rd party sinks will need to be setup again using new tokens and credentials.
 
 {{% note %}}
-*So far, we haven’t moved any time series data over.*
+*So far, we haven't moved any time series data over.*
 If you need to load your existing historical data into your instance, keep reading.
 {{% /note %}}
 
 ## 9. Load your historical data into new instance
 
-There’s no direct migration of raw storage files, but it’s straightforward to use the command line to export and then re-import your data.
+There's no direct migration of raw storage files, but it's straightforward to use the command line to export and then re-import your data.
 You can dump the raw Flux result using the `influx query` command.
-For the time range, pick a time before your bucket’s retention period, or something a really long time ago if you have an unlimited retention period.
+For the time range, pick a time before your bucket's retention period, or something a really long time ago if you have an unlimited retention period.
 
 ```sh
 influx query -c influx_old \
