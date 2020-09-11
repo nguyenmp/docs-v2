@@ -43,7 +43,8 @@ Basically, anything reading, writing, or monitoring your InfluxDB instance shoul
 ## 2. Stop existing InfluxDB beta instance
 
 Next, shut down your existing InfluxDB beta instance.
-You can manually kill the individual process using **Control+c** or by finding the process ID.
+You can manually kill the individual process using **Control+c**
+(or by finding the process ID with `ps aux | grep -i influxd` and using `sudo kill -9 <PID>`).
 If you’ve set `influxd` to run as a system process, follow the same steps you would use to disable any system process.
 
 ## 3. (Optional) Rename existing InfluxDB binaries
