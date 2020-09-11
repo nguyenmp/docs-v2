@@ -1,24 +1,21 @@
 ---
-title: Upgrade to InfluxDB OSS 2.0rc1
+title: Upgrade to InfluxDB OSS 2.0rc0
 description: >
-  Upgrade to InfluxDB OSS 2.0rc1.
+  Upgrade to InfluxDB OSS 2.0rc0.
 menu:
   influxdb_2_0_ref:
-    name: Upgrade to InfluxDB OSS 2.0rc1
+    name: Upgrade to InfluxDB OSS 2.0rc0
 weight: 9
 ---
 
-This post describes the process to upgrade from an existing InfluxDB 2.0 instance (beta 16 or earlier) to InfluxDB OSS 2.0rc1 (release candidate 1).
+This post describes the process to upgrade from an existing InfluxDB 2.0 instance (beta 16 or earlier) to InfluxDB OSS 2.0rc0 (release candidate 1).
 
 Depending on how you have things set up and how important the data stored in InfluxDB is,
 you can choose the parts of this guide that make sense to you.
 
 ### Why is this manual process required?
 
-<!-- To ensure that existing InfluxQL integrations work... -->
-In order to support a smoother upgrade process,
-<!-- from 1.x? -->
-and enable existing InfluxQL integrations to work with the latest release,
+To ensure that existing InfluxQL integrations work with the latest release,
 we had to make breaking changes to the underlying storage engine for InfluxDB 2.0.
 
 {{% note %}}
@@ -59,7 +56,7 @@ We use the names `influxd_old` for this guide, but you can use whatever you like
 
 ## 4. Move existing data and start the latest InfluxDB
 
-If you have not already, [download the InfluxDB OSS 2.0rc1](https://portal.influxdata.com/downloads/).
+If you have not already, [download the InfluxDB OSS 2.0rc0](https://portal.influxdata.com/downloads/).
 
 To move data between the two instances, first configure both the old and new instances of InfluxDB to run at the same time.
 If you download the latest InfluxDB beta, and try to start it up with existing data, it will most likely refuse to start.
@@ -126,6 +123,7 @@ cp ~/.influxdbv2_old/configs ~/.influxdbv2/configs
 
 You might want to edit that file and rename your old config to be something to indicate that it’s the old version, like `influx_old`.
 
+{{< keep-url >}}
 ```toml
 [influx_old]
   url = "http://localhost:9999"
