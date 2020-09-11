@@ -49,7 +49,6 @@ If you've set `influxd` to run as a system process, follow the same steps you wo
 
 ## 3. (Optional) Rename existing InfluxDB binaries
 
-
 To easily identify your existing InfluxDB binaries, rename them `influx_old` and `influxd_old`.
 This is helpful if you've installed the binaries in your path.
 We use the names `influxd_old` for this guide, but you can use whatever you like.
@@ -77,14 +76,15 @@ mv ~/.influxdbv2 ~/.influxdbv2_old
 When we start the old instance again, we will tell it where your data files are located.
 <!-- we'll provide this location -->
 
-You can now start the latest InfluxDB version.
-Since the data folder has been moved, everything will be empty.
-<!-- You can check out http://localhost:8086 in your browser and see a setup page, but don't set it up yet. -->
-You can check out http://localhost:8086 in your browser and see a setup page, but don't go through the setup process yet.
+Start the latest InfluxDB version by running
 
 ```sh
 influxd
 ```
+
+Since the data folder has been moved, everything will be empty.
+<!-- You can check out http://localhost:8086 in your browser and see a setup page, but don't set it up yet. -->
+You can check out http://localhost:8086 in your browser and see a setup page, but don't go through the setup process yet.
 
 ## 5. Start old InfluxDB beta instance
 
