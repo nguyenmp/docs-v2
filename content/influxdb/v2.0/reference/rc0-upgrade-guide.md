@@ -17,7 +17,7 @@ To upgrade from InfluxDB 2.0 beta 16 or earlier to InfluxDB 2.0rc0, you must man
 - [5. Start old InfluxDB beta instance](#)
 - [6. Configure configuration profiles for the InfluxDB CLI](#)
 - [7. Copy all resources from old instance to the new one](#)
-- [8. Setup the integrations to point to new instance](#)
+- [8. Setup integrations to point to new instance](#)
 - [9. Load historical data into new instance](#)
 
 Depending on how you have things set up and how important the data stored in InfluxDB is,
@@ -240,21 +240,18 @@ BUCKETS    +add | -remove | unchanged
 Now you have all the resources from your old instance stored in your new instance.
 Log into your new instance (probably http://localhost:8086) and take a look.
 
-## 8. Setup the integrations to point to new instance
+## 8. Setup integrations to point to new instance
 
-Now is a good time to set up any integrations you needed to disable before this process all started.
-You have a better understanding of what those might be, but anything related to Telegraf, client libraries, custom applications, or 3rd party sinks will need to be setup again using new tokens and credentials.
-
-{{% note %}}
-*So far, we haven't moved any time series data over.*
-If you need to load your existing historical data into your instance, keep reading.
-{{% /note %}}
+Now is a good time to set up any integrations you needed to disable at the beginning of this process.
+Telegraf, client libraries, custom applications,
+<!-- sinks? -->
+or third-party sinks will need to be setup again using new tokens and credentials.
 
 ## 9. Load your historical data into new instance
 
 There's no direct migration of raw storage files, but it's straightforward to use the command line to export and then re-import your data.
 You can dump the raw Flux result using the `influx query` command.
-For the time range, pick a time before your bucket's retention period, or something a really long time ago if you have an unlimited retention period.
+For the range, pick a time before your bucket's retention period, or something a really long time ago if you have an unlimited retention period.
 
 ```sh
 influx query -c influx_old \
