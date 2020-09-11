@@ -8,7 +8,17 @@ menu:
 weight: 9
 ---
 
-This post describes the process to upgrade from an existing InfluxDB 2.0 instance (beta 16 or earlier) to InfluxDB OSS 2.0rc0 (release candidate 1).
+To upgrade from InfluxDB 2.0 beta 16 or earlier to InfluxDB 2.0rc0, you must manually upgrade all resources and data to the latest version by completing the following steps:
+
+- [1. Disable any existing integrations](#1-disable-any-existing-integrations)
+- [2. Stop existing InfluxDB beta instance](#)
+- [3. (Optional) Rename existing InfluxDB binaries](#)
+- [4. Move existing data and start the latest InfluxDB](#)
+- [5. Start old InfluxDB beta instance](#)
+- [6. Configure configuration profiles for the InfluxDB CLI](#)
+- [7. Copy all resources from old instance to the new one](#)
+- [8. Setup the integrations to point to new instance](#)
+- [9. Load historical data into new instance](#)
 
 Depending on how you have things set up and how important the data stored in InfluxDB is,
 you can choose the parts of this guide that make sense to you.
@@ -23,18 +33,6 @@ If you have questions upgrading please
 [open an issue](https://github.com/influxdata/influxdb/issues)
 or join the [Community Slack workspace](https://influxcommunity.slack.com/) to get immediate help.
 {{% /note %}}
-
-### Overview
-
-- [1. Disable any existing integrations](#1-disable-any-existing-integrations)
-- [2. Stop existing InfluxDB beta instance](#)
-- [3. (Optional) Rename existing InfluxDB binaries](#)
-- [4. Move existing data and start the latest InfluxDB](#)
-- [5. Start old InfluxDB beta instance](#)
-- [6. Configure configuration profiles for the InfluxDB CLI](#)
-- [7. Copy all resources from old instance to the new one](#)
-- [8. Setup the integrations to point to new instance](#)
-- [9. Load historical data into new instance](#)
 
 ## 1. Disable any existing integrations
 
@@ -172,7 +170,6 @@ Please type your primary bucket name: dummy_bucket
 
 Please type your retention period in hours.
 Or press ENTER for infinite.:
-
 
 You have entered:
   Username:          admin
