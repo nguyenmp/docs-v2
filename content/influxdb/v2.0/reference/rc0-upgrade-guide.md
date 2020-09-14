@@ -92,7 +92,7 @@ If you were using specific [command line flags](/influxdb/v2.0/reference/cli/inf
 {{% /note %}}
 
 Since the data folder has been moved, everything will be empty.
-You can check out http://localhost:8086 in your browser and see a setup page, but don't go through the setup process yet.
+You can visit http://localhost:8086 in your browser and see a setup page, but don't go through the setup process yet.
 
 ## 5. Start old InfluxDB beta instance
 
@@ -125,13 +125,13 @@ Next, set up your InfluxDB CLI to connect to your old and new instances.
 
 ### Configure old profile
 
-If you've used the CLI before, you can copy your existing `configs` file to your new data directory:
+If you've used the CLI before, copy your existing `configs` file to your new data directory:
 
 ```sh
 cp ~/.influxdbv2_old/configs ~/.influxdbv2/configs
 ```
 
-You might also want to rename the old configuration file to something like `influx_old`.
+We recommend renaming the old configuration file to something like `influx_old`.
 
 {{< keep-url >}}
 ```toml
@@ -142,7 +142,7 @@ You might also want to rename the old configuration file to something like `infl
   active = true
 ```
 
-If you've never used the CLI before, you can create a new configuration profile to connect to your old instance using the `influx config` command.
+If you've never used the CLI before, create a new configuration profile to connect to your old instance using the `influx config` command.
 
 ```sh
 influx config create \
@@ -152,6 +152,7 @@ influx config create \
     --token <OLD_TOKEN>
 ```
 
+<!-- kelly: Now, when you run...you'll see -->
 If you run `influx config ls` after this, you should see a profile for your old instance.
 
 ```sh
@@ -218,8 +219,9 @@ Now we can copy all your existing InfluxDB resources, such as dashboards, tasks,
 influx export all -c influx_old | influx apply -c default
 ```
 
-Check out our documentation for the [`influx export`](/influxdb/v2.0/reference/cli/influx/export/)
-and [`influx apply`](/influxdb/v2.0/reference/cli/influx/apply/) commands if you'd like more details about what this is doing.
+(To learn more about this command, see
+[`influx export`](/influxdb/v2.0/reference/cli/influx/export/) and
+[`influx apply`](/influxdb/v2.0/reference/cli/influx/apply/).)
 
 You should see a list of the resources being created in your new instance.
 Assuming everything went ok, you can feel free to delete the bucket created during the setup.
