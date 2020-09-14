@@ -10,7 +10,7 @@ weight: 9
 
 To upgrade from InfluxDB 2.0 beta 16 or earlier to InfluxDB 2.0rc0, you must manually upgrade all resources and data to the latest version by completing the following steps:
 
-- [1. Disable any existing integrations](#1-disable-any-existing-integrations)
+- [1. Disable existing integrations](#1-disable-existing-integrations)
 - [2. Stop existing InfluxDB beta instance](#)
 - [3. (Optional) Rename existing InfluxDB binaries](#)
 - [4. Move existing data and start the latest InfluxDB](#)
@@ -34,7 +34,7 @@ If you have questions upgrading please
 or join the [Community Slack workspace](https://influxcommunity.slack.com/) to get immediate help.
 {{% /note %}}
 
-## 1. Disable any existing integrations
+## 1. Disable existing integrations
 
 To begin, if you have any software interacting with your InfluxDB beta instance, pause those integrations until the upgrade is complete.
 This includes Telegraf, client libraries, and any custom applications you may have developed.
