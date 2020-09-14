@@ -102,38 +102,37 @@ You can now start your old influxdb instance and point it to your old data direc
 influxd_old --bolt-path ~/.influxdbv2_old/influxd.bolt --engine-path ~/.influxdbv2_old/engine
 ```
 
-If you used a different location, update as appropriate.
-
 Double check that InfluxDB is working by going to your previous InfluxDB beta location (probably http://localhost:9999) and logging in.
 Everything should still be there.
+
+{{% warn %}}
+Backup your old `influxd.bolt` file before doing this, as manually editing this file could cause you to lose all your data.
+{{% /warn %}}
 
 {{% note %}}
 If you run into a problem about a missing migration, you can manually edit your bolt file to remove it.
 You can use BoltBrowser to open and edit your old influxd.bolt file and manually remove the offending migration.
 
-{{% warn %}}
-Make a backup of your old influxd.bolt file before doing this, as manually editing your bolt file could cause you to lose all your data.
-{{% /warn %}}
-
 Highlight the record under the `migrationsv1` path and press **D**.
 {{% /note %}}
 
+<!-- kelly: Now, the new and old.... -->
 At this point, you should have the new instance and old instance of InfluxDB running on the same machine.
 
 ## 6. Configure configuration profiles for the InfluxDB CLI
 <!-- TODO edit this heading? ☝ -->
 
 Next, set up your InfluxDB CLI to connect to your old and new instances.
-If you've used the CLI before, you can copy your existing config file to your new data directory:
-<!-- For configuring the connection to the old InfluxDB instance, if you've used the CLI before, you can simply copy your existing `configs` file to the new data directory: -->
 
 ### Configure old profile
+
+If you've used the CLI before, you can copy your existing `configs` file to your new data directory:
 
 ```sh
 cp ~/.influxdbv2_old/configs ~/.influxdbv2/configs
 ```
 
-You might want to edit that file and rename your old config to be something to indicate that it's the old version, like `influx_old`.
+You might also want to rename the old configuration file to something like `influx_old`.
 
 {{< keep-url >}}
 ```toml
