@@ -15,7 +15,7 @@ To upgrade from InfluxDB 2.0 beta 16 or earlier to InfluxDB 2.0rc0, you must man
 - [3. (Optional) Rename existing InfluxDB binaries](#)
 - [4. Move existing data and start the latest InfluxDB](#)
 - [5. Start old InfluxDB beta instance](#)
-- [6. Configure configuration profiles for the InfluxDB CLI](#)
+- [6. Create configuration profiles for the InfluxDB CLI](#)
 - [7. Copy all resources from old instance to the new one](#)
 - [8. Setup integrations to point to new instance](#)
 - [9. Load historical data into new instance](#)
@@ -119,8 +119,7 @@ Highlight the record under the `migrationsv1` path and press **D**.
 <!-- kelly: Now, the new and old.... -->
 At this point, you should have the new instance and old instance of InfluxDB running on the same machine.
 
-## 6. Configure configuration profiles for the InfluxDB CLI
-<!-- TODO edit this heading? ☝ -->
+## 6. Create configuration profiles for the InfluxDB CLI
 
 Next, set up your InfluxDB CLI to connect to your old and new instances.
 
