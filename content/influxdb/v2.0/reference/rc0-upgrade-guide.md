@@ -68,16 +68,12 @@ Incompatible InfluxDB 2.0 version found.
 Move all files outside of engine_path before influxd will start.
 ```
 
-So let's listen to the message and move our previous data to a safe location:
-<!-- TODO From Kelly: -->
-<!-- To ensure you don't get this message, run the following command to move your existing data to a another location (anywhere you like): -->
+To ensure you don't get this message, run the following command to move your existing data to a another location (anywhere you like):
 
 ```sh
 mv ~/.influxdbv2 ~/.influxdbv2_old
 ```
 
-<!-- TODO from russ -->
-<!-- This is the default. if they are using a custom data directory (--engine-path and/or --bolt-path) for their influxdb beta, they would use that here. -->
 (You can move it to wherever you'd like.)
 When we start the old instance again, we will tell it where your data files are located.
 
@@ -203,12 +199,13 @@ You now have two config profiles: one named `default` which points to your new i
 
 ```sh
 $ influx config ls
-Active	Name		URL					Org
- 	default		http://localhost:8086			InfluxData
-*	influx_old	http://localhost:9999			InfluxData
+Active  Name        URL                    Org
+        default     http://localhost:8086  InfluxData
+*       influx_old  http://localhost:9999  InfluxData
 ```
 
 <!-- TODO add docs link below for profiles... -->
+<!-- TODO is this flag correct?-->
 Now you can send commands to each of them as needed using the [`-c, --active-config`]() option on the CLI.
 
 ## 7. Copy all resources from old instance to the new one
@@ -261,8 +258,7 @@ You will need to manually reconfigure those.
 
 Now you have all the resources from your old instance stored in your new instance.
 Sign in to your new instance (by default http://localhost:8086) and take a look.
-<!-- TODO from Russ: -->
-<!-- We haven't touched your data yet, so your dashboards will probably look a little empty. -->
+You will see dashboards, but your old data has yet been migrated.
 
 ## 8. Setup integrations to point to new instance
 
