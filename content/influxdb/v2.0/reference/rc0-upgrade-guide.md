@@ -253,10 +253,11 @@ BUCKETS    +add | -remove | unchanged
 +-----+------------------------+----+---------------+------------------+-------------+
 ```
 
-<!-- TODO from Russ: -->
-<!-- We are using config profiles here to export all the resources from the old instance and applying them to your new instance. -->
-<!-- The only things that will not be copied over are scraper configurations. -->
-<!-- You will need to manually reconfigure those. -->
+{{% note %}}
+We are using config profiles here to export all the resources from the old instance and applying them to your new instance.
+The only things that will not be copied over are scraper configurations.
+You will need to manually reconfigure those.
+{{% /note %}}
 
 Now you have all the resources from your old instance stored in your new instance.
 Sign in to your new instance (by default http://localhost:8086) and take a look.
