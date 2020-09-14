@@ -140,6 +140,7 @@ We recommend renaming the old configuration file to something like `influx_old`.
 
 If you've never used the CLI before, create a new configuration profile to connect to your old instance using the `influx config` command.
 
+{{< keep-url >}}
 ```sh
 influx config create \
     --config-name influx_old \
@@ -151,6 +152,7 @@ influx config create \
 <!-- kelly: Now, when you run...you'll see -->
 If you run `influx config ls` after this, you should see a profile for your old instance.
 
+{{< keep-url >}}
 ```sh
 $ influx config ls
 Active  Name        URL                    Org
@@ -197,6 +199,7 @@ admin	InfluxData	dummy_bucket
 
 You now have two config profiles: one named `default` which points to your new instance, and one named `influx_old` that points to your old instance.
 
+{{< keep-url >}}
 ```sh
 $ influx config ls
 Active  Name        URL                    Org
