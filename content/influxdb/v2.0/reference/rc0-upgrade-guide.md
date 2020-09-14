@@ -10,7 +10,7 @@ weight: 9
 
 To upgrade from InfluxDB 2.0 beta 16 or earlier to InfluxDB 2.0rc0, you must manually upgrade all resources and data to the latest version by completing the following steps:
 
-- [1. Disable existing integrations](#1-disable-existing-integrations)
+- [1. Disable existing integrations](#)
 - [2. Stop existing InfluxDB beta instance](#)
 - [3. (Optional) Rename existing InfluxDB binaries](#)
 - [4. Move existing data and start the latest InfluxDB](#)
@@ -39,8 +39,6 @@ or join the [Community Slack workspace](https://influxcommunity.slack.com/) to g
 
 To begin, shut off all integrations that are reading, writing, or monitoring your InfluxDB instance.
 This includes Telegraf, client libraries, and any custom applications.
-<!-- TODO: move this part down? re-enable integrations -->
-Basically, anything reading, writing, or monitoring your InfluxDB instance should be shut off and re-enabled after the upgrade.
 
 ## 2. Stop existing InfluxDB beta instance
 
@@ -57,9 +55,8 @@ We use the names `influxd_old` for this guide, but you can use whatever you like
 
 ## 4. Move existing data and start the latest InfluxDB
 
-<!-- TODO -->
-Download and follow the install instructions for `influxd` and `influx`, 
 If you have not already, [download the InfluxDB OSS 2.0rc0](https://portal.influxdata.com/downloads/).
+Download and follow the install instructions for `influxd` and `influx`.
 Be careful not to overwrite the existing binaries(that they may or may not have renamed earlier).
 
 To move data between the two instances, first configure both the old and new instances of InfluxDB to run at the same time.
@@ -79,6 +76,8 @@ So let's listen to the message and move our previous data to a safe location:
 mv ~/.influxdbv2 ~/.influxdbv2_old
 ```
 
+<!-- TODO from russ -->
+<!-- This is the default. if they are using a custom data directory (--engine-path and/or --bolt-path) for their influxdb beta, they would use that here. -->
 (You can move it to wherever you'd like.)
 When we start the old instance again, we will tell it where your data files are located.
 
@@ -122,9 +121,13 @@ Highlight the record under the `migrationsv1` path and press **D**.
 At this point, you should have the new instance and old instance of InfluxDB running on the same machine.
 
 ## 6. Configure configuration profiles for the InfluxDB CLI
+<!-- TODO edit this heading? ☝ -->
 
 Next, set up your InfluxDB CLI to connect to your old and new instances.
 If you've used the CLI before, you can copy your existing config file to your new data directory:
+<!-- For configuring the connection to the old InfluxDB instance, if you've used the CLI before, you can simply copy your existing `configs` file to the new data directory: -->
+
+### Configure old profile
 
 ```sh
 cp ~/.influxdbv2_old/configs ~/.influxdbv2/configs
@@ -158,6 +161,8 @@ $ influx config ls
 Active  Name        URL                    Org
 *       influx_old  http://localhost:9999  InfluxData
 ```
+
+### Configure new profile
 
 Next, let's set up your new instance which will automatically create a configuration profile for you.
 You can use the same username and password as your old instance, or something completely new, it's up to you.
@@ -266,14 +271,15 @@ or third-party data sinks will need to be setup again using new tokens and crede
 
 ## 9. Load your historical data into new instance
 
-There's no direct migration of raw storage files, but it's straightforward to use the command line to export and then re-import your data.
-You can dump the raw Flux result using the `influx query` command.
-For the range, pick a time before your bucket's retention period, or something a really long time ago if you have an unlimited retention period.
+Use the CLI to export and then re-import your data using the command below.
+(For the range, pick a time before your bucket's retention period, or something a really long time ago if you have an unlimited retention period.)
 
 ```sh
 influx query -c influx_old \
   'from(bucket: "my-bucket") |> range(start: -3y)' --raw > my-bucket.csv
 ```
+
+Then write to the new bucket:
 
 ```sh
 influx write -c default --format csv -b my-bucket -f my-bucket.csv
