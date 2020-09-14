@@ -213,7 +213,7 @@ Now you can send commands to each of them as needed using the [`-c, --active-con
 
 ## 7. Copy all resources from old instance to the new one
 
-Now we can copy all your existing InfluxDB resources, such as dashboards, tasks, and alerts to your new instance using a single command.
+Copy all your existing InfluxDB resources, such as dashboards, tasks, and alerts to your new instance by running the following command:
 
 ```sh
 influx export all -c influx_old | influx apply -c default
@@ -263,11 +263,11 @@ Now you have all the resources from your old instance stored in your new instanc
 Sign in to your new instance (by default http://localhost:8086) and take a look.
 You will see dashboards, but your old data has yet been migrated.
 
-## 8. Setup integrations to point to new instance
+## 8. Set up integrations to point to new instance
 
-Now is a good time to set up any integrations you needed to disable at the beginning of this process.
+Re-enable any integrations you disabled in step 2.
 Telegraf, client libraries, custom applications,
-or third-party data sinks will need to be setup again using new tokens and credentials.
+or third-party data sinks will need to be set up again using new tokens and credentials.
 
 ## 9. Load your historical data into new instance
 
