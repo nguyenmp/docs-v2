@@ -21,7 +21,7 @@ To upgrade from InfluxDB 2.0 beta 16 or earlier to InfluxDB 2.0rc0, you must man
 - [9. Load historical data into new instance](#)
 
 Depending on how you have things set up and how important the data stored in InfluxDB is,
-you can choose the parts of this guide that make sense to you.
+you can choose the parts of this guide that make sense to you. For example, if there's nothing in your existing InfluxDB Beta instance you need to keep, feel free to skip the sections about migrating resources and data to the new instance.
 
 ### Why is this manual process required?
 
