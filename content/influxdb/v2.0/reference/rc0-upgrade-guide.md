@@ -114,8 +114,7 @@ You can use BoltBrowser to open and edit your old influxd.bolt file and manually
 Highlight the record under the `migrationsv1` path and press **D**.
 {{% /note %}}
 
-<!-- kelly: Now, the new and old.... -->
-At this point, you should have the new instance and old instance of InfluxDB running on the same machine.
+Now, the new instance and old instance of InfluxDB are running simultaneously.
 
 ## 6. Create configuration profiles for the InfluxDB CLI
 
@@ -151,8 +150,7 @@ influx config create \
     --token <OLD_TOKEN>
 ```
 
-<!-- kelly: Now, when you run...you'll see -->
-If you run `influx config ls` after this, you should see a profile for your old instance.
+Now when you run `influx config ls`, you will see a profile for your old instance.
 
 {{< keep-url >}}
 ```sh
