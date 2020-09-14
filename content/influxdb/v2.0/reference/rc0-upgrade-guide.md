@@ -95,7 +95,9 @@ You can visit http://localhost:8086 in your browser and see a setup page, but do
 You can now start your old influxdb instance and point it to your old data directory:
 
 ```sh
-influxd_old --bolt-path ~/.influxdbv2_old/influxd.bolt --engine-path ~/.influxdbv2_old/engine
+./influxd_old \
+    --bolt-path ~/.influxdbv2_old/influxd.bolt \
+    --engine-path ~/.influxdbv2_old/engine
 ```
 
 Double check that InfluxDB is working by going to your previous InfluxDB beta location (probably http://localhost:9999) and logging in.
