@@ -37,8 +37,9 @@ or join the [Community Slack workspace](https://influxcommunity.slack.com/) to g
 
 ## 1. Disable existing integrations
 
-To begin, if you have any software interacting with your InfluxDB beta instance, pause those integrations until the upgrade is complete.
-This includes Telegraf, client libraries, and any custom applications you may have developed.
+To begin, shut off all integrations that are reading, writing, or monitoring your InfluxDB instance.
+This includes Telegraf, client libraries, and any custom applications.
+<!-- Q: move this part down? re-enable integrations -->
 Basically, anything reading, writing, or monitoring your InfluxDB instance should be shut off and re-enabled after the upgrade.
 
 ## 2. Stop existing InfluxDB beta instance
@@ -61,6 +62,7 @@ If you have not already, [download the InfluxDB OSS 2.0rc0](https://portal.influ
 To move data between the two instances, first configure both the old and new instances of InfluxDB to run at the same time.
 If you download the latest InfluxDB beta, and try to start it up with existing data, it will most likely refuse to start.
 You will see an error message in the terminal this old data isn't compatible.
+<!-- If you download the latest InfluxDB beta, and try to start it with existing data, most likely it won't start and you'll see the following error message in your terminal: -->
 
 ```
 Incompatible InfluxDB 2.0 version found.
@@ -75,7 +77,6 @@ mv ~/.influxdbv2 ~/.influxdbv2_old
 
 (You can move it to wherever you'd like.)
 When we start the old instance again, we will tell it where your data files are located.
-<!-- we'll provide this location -->
 
 Start the latest InfluxDB version by running
 
@@ -133,13 +134,14 @@ You might want to edit that file and rename your old config to be something to i
   active = true
 ```
 
-If you've never used the CLI before, you can create a new configuration profile using the `influx config` command.
+If you've never used the CLI before, you can create a new configuration profile to connect to your old instance using the `influx config` command.
 
 ```sh
 influx config create \
     --config-name influx_old \
     --host-url http://localhost:9999 \
-    --org influxdata --token <OLD_TOKEN>
+    --org influxdata \
+    --token <OLD_TOKEN>
 ```
 
 If you run `influx config ls` after this, you should see a profile for your old instance.
@@ -147,7 +149,7 @@ If you run `influx config ls` after this, you should see a profile for your old 
 ```sh
 $ influx config ls
 Active  Name        URL                    Org
-*       influx_old  http://localhost:8086  InfluxData
+*       influx_old  http://localhost:9999  InfluxData
 ```
 
 Next, let's set up your new instance which will automatically create a configuration profile for you.
@@ -199,7 +201,7 @@ Now you can send commands to each of them as needed using the `-c, --active-conf
 
 ## 7. Copy all resources from old instance to the new one
 
-Now we can copy all your existing influxdb resources, such as dashboards, tasks, and alerts to your new instance using a single command.
+Now we can copy all your existing InfluxDB resources, such as dashboards, tasks, and alerts to your new instance using a single command.
 
 ```sh
 influx export all -c influx_old | influx apply -c default
