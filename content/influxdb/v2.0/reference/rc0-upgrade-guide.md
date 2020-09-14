@@ -21,7 +21,8 @@ To upgrade from InfluxDB 2.0 beta 16 or earlier to InfluxDB 2.0rc0, you must man
 - [9. Load historical data into new instance](#)
 
 Depending on how you have things set up and how important the data stored in InfluxDB is,
-you can choose the parts of this guide that make sense to you. For example, if there's nothing in your existing InfluxDB Beta instance you need to keep, feel free to skip the sections about migrating resources and data to the new instance.
+you can choose the parts of this guide that make sense to you.
+For example, if there's nothing in your existing InfluxDB beta instance you need to keep, feel free to skip the sections about migrating resources and data to the new instance.
 
 ### Why is this manual process required?
 
@@ -264,8 +265,8 @@ influx write -c default --format csv -b my-bucket -f my-bucket.csv
 
 Repeat that process for each bucket.
 
-## Wrapping up
+## Verify InfluxDB resources, data, and integrations
 
-You should now have the latest version of InfluxDB running with all your resources, data, and integrations configured.
+To verify that the latest version of InfluxDB is running with all your resources, data, and integrations configured,
 Double check and make sure everything is there and it is working as expected.
-Once you have everything set up again, you can safely turn off your old instance and archive that data directory.
+Once set up with the latest InfluxDB, you can safely turn off your old instance and archive that data directory.
