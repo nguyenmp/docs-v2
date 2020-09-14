@@ -223,8 +223,8 @@ influx export all -c influx_old | influx apply -c default
 [`influx export`](/influxdb/v2.0/reference/cli/influx/export/) and
 [`influx apply`](/influxdb/v2.0/reference/cli/influx/apply/).)
 
-You should see a list of the resources being created in your new instance.
-Assuming everything went ok, you can feel free to delete the bucket created during the setup.
+This displays a list of the resources being created in your new instance.
+Assuming everything succeeded, you can feel free to delete the bucket created during the setup.
 
 ```sh
 $ influx export all -c influx_old | influx apply -c default
@@ -259,7 +259,7 @@ BUCKETS    +add | -remove | unchanged
 <!-- You will need to manually reconfigure those. -->
 
 Now you have all the resources from your old instance stored in your new instance.
-Log into your new instance (probably http://localhost:8086) and take a look.
+Sign in to your new instance (by default http://localhost:8086) and take a look.
 <!-- TODO from Russ: -->
 <!-- We haven't touched your data yet, so your dashboards will probably look a little empty. -->
 
