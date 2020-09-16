@@ -120,7 +120,7 @@ Now, the new instance and old instance of InfluxDB are running simultaneously.
 
 Next, set up your InfluxDB CLI to connect to your old and new instances.
 
-### Configure old profile
+### a. Configure old profile
 
 If you've used the CLI before, copy your existing `configs` file to your new data directory:
 
@@ -159,7 +159,7 @@ Active  Name        URL                    Org
 *       influx_old  http://localhost:9999  InfluxData
 ```
 
-### Configure new profile
+### b. Configure new profile
 
 Next, let's set up your new instance which will automatically create a configuration profile for you.
 You can use the same username and password as your old instance, or something completely new, it's up to you.
